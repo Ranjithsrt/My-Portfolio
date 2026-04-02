@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+html { scroll-behavior: smooth; }
+
+:root {
+    --font-sans: 'JetBrains Mono', monospace;
+    --font-mono: 'JetBrains Mono', monospace;
+    --bg-color: #030712; /* gray-950 */
+    --text-color: #ffffff;
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.1);
+}
+
+.light {
+    --bg-color: #f9fafb; /* gray-50 */
+    --text-color: #111827; /* gray-900 */
+    --glass-bg: rgba(0, 0, 0, 0.05);
+    --glass-border: rgba(0, 0, 0, 0.1);
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: var(--font-sans);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.font-sans {
+    font-family: var(--font-sans);
+}
+
+.font-mono {
+    font-family: var(--font-mono);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-sans);
+    letter-spacing: -0.02em;
+}
+
+p, span, div, li, a, input, textarea, label {
+    font-family: var(--font-sans);
+}
+
+.gradient-text {
+    background: linear-gradient(135deg, #6366f1, #8b5cf6, #ec4899);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.gradient-bg {
+    background: linear-gradient(135deg, #6366f1, #8b5cf6, #ec4899);
+}
+
+.glass {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+}
+
+.skill-glow:hover {
+    box-shadow: 0 0 30px rgba(99, 102, 241, 0.3);
+}
+
+/* Code syntax highlighting - One Dark theme */
+.code-keyword { color: #c678dd; }
+.code-variable { color: #61afef; }
+.code-string { color: #98c379; }
+.code-bracket { color: #abb2bf; }
+.code-comment { color: #5c6370; font-style: italic; }
+
+/* Note: All responsive design uses Tailwind CSS classes only */
