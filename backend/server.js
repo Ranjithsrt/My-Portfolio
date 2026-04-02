@@ -6,6 +6,8 @@ import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
 import connectDB from './config/db.js';
 import messageRoutes from './routes/messages.js';
+import chatRoutes from './routes/chat.js';
+
 
 dotenv.config();
 
@@ -67,11 +69,14 @@ if (process.env.NODE_ENV !== 'production') {
     });
 }
 
-// Trust proxy for accurate IP behind reverse proxy
-app.set('trust proxy', true);
+// Trust proxy configuration for accurate IP behind reverse proxy
+app.set('trust proxy', process.env.NODE_ENV === 'production' ? 1 : 0);
+
 
 // API Routes
 app.use('/api/messages', messageRoutes);
+app.use('/api/chat', chatRoutes);
+
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {

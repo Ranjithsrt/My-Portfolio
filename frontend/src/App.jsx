@@ -963,7 +963,8 @@ const AIChatBot = () => {
 
   const restrictedTopics = ['hacking', 'illegal', 'drugs', 'weapons', 'violence', 'adult', 'porn', 'scam', 'fraud']
 
-  const handleSend = () => {
+  const handleSend = async () => {
+
     if (!input.trim()) return
 
     // Check for restricted topics
@@ -980,38 +981,37 @@ const AIChatBot = () => {
     }
 
     setMessages(prev => [...prev, { role: 'user', text: input }])
+    const currentInput = input
     setInput('')
     setIsTyping(true)
 
-    // Simulate AI response with simple logic
-    setTimeout(() => {
-      let response = ''
-      const q = lowerInput
+    try {
+      const response = await fetch(`${API_URL}/chat`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ message: currentInput }),
+      })
 
-      if (q.includes('skill') || q.includes('tech') || q.includes('stack')) {
-        response = 'Ranjith is a MERN Stack Developer proficient in React, Node.js, MongoDB, Express, HTML, CSS, Tailwind, Git, and more!'
-      } else if (q.includes('project') || q.includes('work')) {
-        response = 'Ranjith has built several projects including myBookapp (MERN bookstore), MERN stack projects, React concepts, and more. Check the Projects section!'
-      } else if (q.includes('contact') || q.includes('email') || q.includes('phone') || q.includes('reach')) {
-        response = 'You can reach Ranjith via WhatsApp (8610791655), Email (ranjith201099@gmail.com), Discord, GitHub, or LinkedIn. All links are in the Contact section!'
-      } else if (q.includes('experience') || q.includes('year')) {
-        response = 'Ranjith has 2+ years of experience in full-stack web development, building responsive and scalable applications.'
-      } else if (q.includes('hire') || q.includes('job') || q.includes('available')) {
-        response = 'Yes! Ranjith is currently available for work. Feel free to reach out via WhatsApp or Email to discuss your project!'
-      } else if (q.includes('price') || q.includes('cost') || q.includes('rate') || q.includes('charge')) {
-        response = 'Pricing depends on project scope and complexity. Contact Ranjith directly for a quote!'
-      } else if (q.includes('hello') || q.includes('hi') || q.includes('hey')) {
-        response = 'Hello! 👋 How can I help you learn more about Ranjith today?'
-      } else if (q.includes('thank')) {
-        response = 'You\'re welcome! 😊 Feel free to ask if you have any other questions!'
-      } else {
-        response = 'I\'m here to help with questions about Ranjith\'s skills, projects, and services. What would you like to know?'
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to get response')
       }
 
-      setMessages(prev => [...prev, { role: 'bot', text: response }])
+      setMessages(prev => [...prev, { role: 'bot', text: data.response }])
+    } catch (error) {
+      console.error('Chat error:', error)
+      setMessages(prev => [...prev, { 
+        role: 'bot', 
+        text: 'I\'m sorry, I\'m having trouble connecting right now. Please try again later!' 
+      }])
+    } finally {
       setIsTyping(false)
-    }, 1000)
+    }
   }
+
 
   return (
     <>
