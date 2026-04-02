@@ -963,6 +963,18 @@ const AIChatBot = () => {
 
   const restrictedTopics = ['hacking', 'illegal', 'drugs', 'weapons', 'violence', 'adult', 'porn', 'scam', 'fraud']
 
+  // Clear chat when closing
+  const handleToggle = () => {
+    if (isOpen) {
+      // Closing - reset messages
+      setMessages([
+        { role: 'bot', text: 'Hi! I\'m Ranjith\'s AI assistant. Ask me about his skills, projects, or how to contact him!' }
+      ])
+      setInput('')
+    }
+    setIsOpen(!isOpen)
+  }
+
   const handleSend = async () => {
 
     if (!input.trim()) return
@@ -1003,9 +1015,18 @@ const AIChatBot = () => {
       setMessages(prev => [...prev, { role: 'bot', text: data.response }])
     } catch (error) {
       console.error('Chat error:', error)
+      // Always provide a helpful response even if API fails
+      const fallbackResponses = [
+        "Hello! 👋 I'm Ranjith's AI assistant. Ask me about his MERN stack skills, projects, or how to hire him!",
+        "Hey there! Ready to learn about Ranjith's development expertise? What would you like to know?",
+        "Vanakkam! 🙏 I'm here to help you discover Ranjith's portfolio. Ask away!",
+        "I can tell you about Ranjith's **skills**, **projects**, or how to **contact** him. What would you like to know?",
+        "Ask me about Ranjith's MERN stack expertise, his portfolio projects, or his availability for work!"
+      ]
+      const randomResponse = fallbackResponses[Math.floor(Math.random() * fallbackResponses.length)]
       setMessages(prev => [...prev, { 
         role: 'bot', 
-        text: 'I\'m sorry, I\'m having trouble connecting right now. Please try again later!' 
+        text: randomResponse
       }])
     } finally {
       setIsTyping(false)
@@ -1038,7 +1059,7 @@ const AIChatBot = () => {
         animate={{ scale: 1 }}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={handleToggle}
         className="fixed bottom-16 right-4 sm:bottom-24 sm:right-8 z-50 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-gradient-to-r from-primary to-secondary text-white shadow-2xl flex items-center justify-center text-xl sm:text-2xl"
       >
         {isOpen ? '✕' : '🤖'}
@@ -1064,17 +1085,6 @@ const AIChatBot = () => {
                   <p className="text-white/70 text-xs">Online</p>
                 </div>
               </div>
-              {/* WhatsApp Button */}
-              <motion.a
-                href="https://wa.me/8610791655"
-                target="_blank"
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                className="w-10 h-10 rounded-full bg-green-500 flex items-center justify-center text-xl shadow-lg"
-                title="Chat on WhatsApp"
-              >
-                💬
-              </motion.a>
             </div>
 
             {/* Messages */}

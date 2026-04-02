@@ -48,7 +48,7 @@ app.use('/api/messages', messageLimiter);
 const corsOptions = {
     origin: process.env.NODE_ENV === 'production' 
         ? ['https://yourdomain.com'] 
-        : ['http://localhost:5173', 'http://localhost:3000', 'http://127.0.0.1:5173'],
+        : ['http://localhost:5173', 'http://localhost:5174', 'http://localhost:3000', 'http://127.0.0.1:5173', 'http://127.0.0.1:5174'],
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
