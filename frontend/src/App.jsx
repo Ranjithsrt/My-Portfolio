@@ -1,5 +1,6 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { useState, useEffect } from 'react'
+import { API_URL } from './config/api.js'
 import { FaGithub, FaLinkedin, FaEnvelope, FaExternalLinkAlt, FaCheck, FaChevronDown, FaArrowUp, FaFileDownload, FaSun, FaMoon } from 'react-icons/fa'
 import { FaHtml5, FaCss3Alt, FaBootstrap, FaJs, FaReact, FaNodeJs, FaGitAlt } from 'react-icons/fa'
 import { SiMongodb, SiMysql, SiExpress, SiTailwindcss, SiPostman, SiRedux, SiJquery } from 'react-icons/si'
@@ -727,8 +728,6 @@ const Contact = () => {
   const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' })
   const [status, setStatus] = useState({ type: '', message: '' })
   const [isLoading, setIsLoading] = useState(false)
-
-  const API_URL = 'http://localhost:5000/api'
 
   const handleSubmit = async (e) => {
     e.preventDefault()

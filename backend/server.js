@@ -47,7 +47,7 @@ app.use('/api/messages', messageLimiter);
 // CORS configuration
 const corsOptions = {
     origin: process.env.NODE_ENV === 'production' 
-        ? ['https://yourdomain.com'] 
+        ? ['https://yourdomain.com', 'https://*.vercel.app', process.env.FRONTEND_URL].filter(Boolean)
         : ['http://localhost:5173', 'http://localhost:5174', 'http://localhost:3000', 'http://127.0.0.1:5173', 'http://127.0.0.1:5174'],
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
@@ -168,29 +168,35 @@ app.use((err, req, res, next) => {
     });
 });
 
-// Connect to database and start server
+// Connect to database and start server (only in non-serverless environments)
 const PORT = process.env.PORT || 5000;
 
-// Handle unhandled promise rejections
-process.on('unhandledRejection', (err) => {
+// Only start the server if we're not in a serverless environment (Vercel)
+if (process.env.VERCEL !== '1') {
+  // Handle unhandled promise rejections
+  process.on('unhandledRejection', (err) => {
     console.error('Unhandled Rejection:', err.message);
     console.log('Shutting down gracefully...');
     server.close(() => process.exit(1));
-});
+  });
 
-// Handle uncaught exceptions
-process.on('uncaughtException', (err) => {
+  // Handle uncaught exceptions
+  process.on('uncaughtException', (err) => {
     console.error('Uncaught Exception:', err.message);
     console.log('Shutting down...');
     process.exit(1);
-});
+  });
 
-// Connect to DB then start server
-connectDB().then(() => {
-    app.listen(PORT, () => {
-        console.log(`Server running on port ${PORT}`);
-        console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
+  // Connect to DB then start server
+  connectDB().then(() => {
+    const server = app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
+      console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
     });
-});
+  });
+} else {
+  // Serverless mode: just connect to DB
+  connectDB().catch(err => console.error('Database connection failed:', err));
+}
 
 export default app;
