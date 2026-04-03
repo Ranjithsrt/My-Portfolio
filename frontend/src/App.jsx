@@ -95,7 +95,11 @@ const Navbar = ({ theme, toggleTheme }) => {
               <a
                 key={link}
                 href={`#${link.toLowerCase()}`}
-                onClick={() => setMobileOpen(false)}
+                onClick={(e) => {
+                  e.preventDefault()
+                  setMobileOpen(false)
+                  document.getElementById(link.toLowerCase())?.scrollIntoView({ behavior: 'smooth' })
+                }}
                 className="block py-3 text-gray-400 hover:text-white transition-colors"
               >
                 {link}
