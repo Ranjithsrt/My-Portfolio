@@ -97,10 +97,17 @@ const Navbar = ({ theme, toggleTheme }) => {
                 href={`#${link.toLowerCase()}`}
                 onClick={(e) => {
                   e.preventDefault()
+                  e.stopPropagation()
                   setMobileOpen(false)
-                  document.getElementById(link.toLowerCase())?.scrollIntoView({ behavior: 'smooth' })
+                  const targetId = link.toLowerCase()
+                  setTimeout(() => {
+                    const element = document.getElementById(targetId)
+                    if (element) {
+                      element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                    }
+                  }, 100)
                 }}
-                className="block py-3 text-gray-400 hover:text-white transition-colors"
+                className="block py-3 text-gray-400 hover:text-white transition-colors cursor-pointer"
               >
                 {link}
               </a>
