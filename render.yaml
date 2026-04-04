@@ -1,29 +1,14 @@
 services:
   - type: web
     name: portfolio-backend
-    env: node
+    runtime: node
     buildCommand: cd backend && npm install
     startCommand: cd backend && npm start
+    plan: free
     envVars:
       - key: NODE_ENV
         value: production
       - key: PORT
         value: 10000
-      - key: MONGODB_URI
-        sync: false  # Set this in Render dashboard
       - key: FRONTEND_URL
         value: https://my-portfolio-eight-ruddy-44.vercel.app
-      - key: GEMINI_API_KEY
-        sync: false
-      - key: SMTP_HOST
-        sync: false
-      - key: SMTP_PORT
-        sync: false
-      - key: SMTP_USER
-        sync: false
-      - key: SMTP_PASS
-        sync: false
-      - key: EMAIL_FROM
-        sync: false
-      - key: NOTIFICATION_EMAIL
-        sync: false
