@@ -24,8 +24,8 @@ services:
       - key: SMTP_USER
         value: ranjith201099@gmail.com
       - key: SMTP_PASS
-        value: ndur euro chof ejlh
+        value: "ndur euro chof ejlh"
       - key: EMAIL_FROM
-        value: Portfolio <ranjith201099@gmail.com>
+        value: "Portfolio <ranjith201099@gmail.com>"
       - key: NOTIFICATION_EMAIL
         value: ranjith201099@gmail.com
