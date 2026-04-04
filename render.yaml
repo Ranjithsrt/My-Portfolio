@@ -14,18 +14,18 @@ services:
       - key: FRONTEND_URL
         value: https://my-portfolio-eight-ruddy-44.vercel.app
       - key: MONGODB_URI
-        sync: false
+        value: mongodb+srv://ranjith201099_db_user:q2mL2iYxspBZH7rK@ranjith-portfolio.zhuteug.mongodb.net/?appName=ranjith-Portfolio
       - key: GEMINI_API_KEY
-        sync: false
+        value: AIzaSyCJHDkwc67pkEGGw01HKlNHEVjV_rTlhtAv
       - key: SMTP_HOST
         value: smtp.gmail.com
       - key: SMTP_PORT
         value: 587
       - key: SMTP_USER
-        sync: false
+        value: ranjith201099@gmail.com
       - key: SMTP_PASS
-        sync: false
+        value: ndur euro chof ejlh
       - key: EMAIL_FROM
-        sync: false
+        value: Portfolio <ranjith201099@gmail.com>
       - key: NOTIFICATION_EMAIL
-        sync: false
+        value: ranjith201099@gmail.com
